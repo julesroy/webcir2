@@ -1,0 +1,9 @@
+{
+    "watch": [
+        "views/**/*.ejs",
+        "./bin/www",
+        "./**/*.js"
+    ],
+    "ext": "ejs js",
+    "exec": "npm run build:css && node ./bin/www"
+}
