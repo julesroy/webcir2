@@ -1,150 +1,135 @@
 const express = require('express');
 const router = express.Router();
-
-// Fonctions
 const bcrypt = require('bcrypt');
-const handleSession = require('../config/handleSession'); // Remplacez requireNoSession par handleSession
-const mysqlConnect = require('../config/database');
+const handleSession = require('../config/handleSession');
+const db = require('../config/database');  // Assure-toi d'utiliser la bonne instance de db
 
-// Pages des formulaires
-router.get(
-    '/signup',
-    (req, res, next) => {
-        handleSession(req, res, next, {
-            requireNoSession: true, // Vérifie que l'utilisateur n'a pas de session
-            redirectSession: '/profil', // Redirige vers le profil si une session existe
-        });
-    },
-    (req, res) => {
-        res.render('signup', { msg: req.query.msg }); // Affiche la page d'inscription
-    },
-);
-
-router.get(
-    '/signin',
-    (req, res, next) => {
-        handleSession(req, res, next, {
-            requireNoSession: true, // Vérifie que l'utilisateur n'a pas de session
-            redirectSession: '/profil', // Redirige vers le profil si une session existe
-        });
-    },
-    (req, res) => {
-        res.render('signin', { msg: req.query.msg }); // Affiche la page de connexion
-    },
-);
-
-// Traitement de la connexion
-router.post('/signinProcess', async (req, res) => {
-    const { email, mdp } = req.body; // Récupération des données du formulaire
-    await new Promise((resolve, reject) => {
-        // Promesse pour la requête SQL
-        mysqlConnect.query('SELECT * FROM users WHERE email = ?', [email], function (err, rows) {
-            if (err) {
-                // Si erreur
-                reject(err); // Rejet de la promesse
-            } else {
-                resolve(rows[0]); // Résolution de la promesse
-            }
-        });
-    })
-        .then(async (row) => {
-            // Si la promesse est résolue
-            if (row && (await bcrypt.compare(mdp, row.mdp))) {
-                // Si le mot de passe est correct
-                // Stocker les informations de l'utilisateur dans la session et les cookies
-                req.session.user = {
-                    idUser: row.idUser,
-                    email: email,
-                    username: row.username
-                };
-                // Cookies pour la session (30 jours)
-                res.cookie('idUser', row.idUser, {
-                    maxAge: 30 * 24 * 60 * 60 * 1000,
-                    httpOnly: true,
-                });
-                res.cookie('email', email, {
-                    maxAge: 30 * 24 * 60 * 60 * 1000,
-                    httpOnly: true,
-                });
-                res.cookie('username', row.username, {
-                    maxAge: 30 * 24 * 60 * 60 * 1000,
-                    httpOnly: true,
-                });
-                res.redirect('/profil'); // Redirection vers la page de profil
-            } else {
-                res.redirect('/signin?msg=mdporemailincorrect'); // Redirection vers la page de connexion avec un message d'erreur
-            }
-        })
-        .catch((err) => {
-            // Gérer l'erreur
-            console.error(err);
-            res.redirect('/signin?msg=erreur'); // Redirection vers la page de connexion avec un message d'erreur
-        });
-});
-
-// Traitement de l'inscription
-router.post('/signupProcess', async (req, res) => {
-    const { email, username, mdp, confirm_mdp } = req.body; // Récupération des données du formulaire
-    if (mdp !== confirm_mdp) {
-        // Si les mots de passe ne correspondent pas
-        res.redirect('/signup?msg=mdpnotsame'); // Redirection vers la page d'inscription avec un message d'erreur
-        return;
-    }
-    const hashedPassword = bcrypt.hashSync(mdp, 10); // Hachage du mot de passe
-    let id_user; // Variable pour stocker l'id de l'utilisateur (depuis la db)
-    await new Promise((resolve, reject) => {
-        // Promesse pour la requête SQL
-        mysqlConnect.query('INSERT INTO users(email, username, mdp) VALUES(?, ?, ?)', [email, username, hashedPassword], function (err, rows) {
-            // Requête SQL
-            if (err) {
-                // Si erreur
-                reject(err); // Rejet de la promesse
-            } else {
-                // Si pas d'erreur
-                id_user = rows.insertId; // Récupération de l'id de l'utilisateur (dernier inséré)
-                resolve(rows); // Résolution de la promesse
-            }
-        });
-    });
-
-    // Stocker les informations de l'utilisateur dans la session et les cookies
+// Fonction utilitaire pour créer la session et les cookies
+function createSessionAndCookies(req, res, user) {
     req.session.user = {
-        idUser: id_user,
-        email: email,
-        username: username
+        idUtilisateur: user.idUtilisateur,
+        email: user.email,
+        username: user.username
     };
 
-    // Cookies pour la session (30 jours)
-    res.cookie('idUser', id_user, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
+    const cookieOptions = {
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 jours
         httpOnly: true,
-    });
-    res.cookie('email', email, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-    });
-    res.cookie('username', username, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-    });
+        secure: true,       // uniquement en HTTPS
+        sameSite: 'Strict'  // protection contre CSRF
+    };
 
-    res.redirect('/profil'); // Redirection vers la page de profil
+    res.cookie("idUtilisateur", user.idUtilisateur, cookieOptions);
+    res.cookie("email", user.email, cookieOptions);
+    res.cookie("username", user.username, cookieOptions);
+}
+
+// Formulaires d'inscription et de connexion
+router.get('/signup',
+    (req, res, next) => {
+        handleSession(req, res, next, {
+            requireNoSession: true,
+            redirectSession: '/profil',
+        });
+    },
+    (req, res) => {
+        res.render('inscription', { msg: req.query.msg });
+    }
+);
+
+router.get('/signin',
+    (req, res, next) => {
+        handleSession(req, res, next, {
+            requireNoSession: true,
+            redirectSession: '/profil',
+        });
+    },
+    (req, res) => {
+        res.render('connexion', { msg: req.query.msg });
+    }
+);
+
+// Traitement connexion
+router.post("/signinProcess", (req, res) => {
+    const { email, mdp } = req.body;
+
+    if (!email || !mdp) {
+        return res.redirect("/signin?msg=champsmanquants");
+    }
+
+    // Requête pour vérifier l'email dans la base de données
+    db.get('SELECT * FROM utilisateurs WHERE email = ?', [email], (err, user) => {
+        if (err) {
+            console.error('Erreur lors de la connexion de l\'utilisateur:', err);
+            return res.redirect("/signin?msg=erreurbdd");
+        }
+
+        if (user && bcrypt.compareSync(mdp, user.mdp)) {  // Comparaison du mot de passe
+            createSessionAndCookies(req, res, user);
+            res.redirect("/profil");
+        } else {
+            res.redirect("/signin?msg=mdporemailincorrect");
+        }
+    });
+});
+
+// Traitement inscription
+router.post("/signupProcess", (req, res) => {
+    const { email, username, mdp } = req.body;
+
+    if (!email || !username || !mdp) {
+        return res.redirect("/signup?msg=champsmanquants");
+    }
+
+    // Vérifier si l'email existe déjà dans la base de données
+    db.get('SELECT idUtilisateur FROM utilisateurs WHERE email = ?', [email], (err, existingUser) => {
+        if (err) {
+            console.error('Erreur lors de la vérification de l\'email:', err);
+            return res.redirect('/signup?msg=erreurbdd');
+        }
+
+        if (existingUser) {
+            return res.redirect('/signup?msg=emailexistant');
+        }
+
+        // Hacher le mot de passe et l'insérer dans la base de données
+        bcrypt.hash(mdp, 10, (err, hashedPassword) => {
+            if (err) {
+                console.error('Erreur lors du hachage du mot de passe:', err);
+                return res.redirect('/signup?msg=erreurbdd');
+            }
+
+            // Insérer le nouvel utilisateur
+            db.run('INSERT INTO utilisateurs (email, username, mdp) VALUES (?, ?, ?)', [email, username, hashedPassword], function (err) {
+                if (err) {
+                    console.error('Erreur lors de l\'insertion de l\'utilisateur:', err);
+                    return res.redirect("/signup?msg=erreurbdd");
+                }
+
+                const newUser = {
+                    idUtilisateur: this.lastID,  // Utilisation de lastID pour récupérer l'ID inséré
+                    email,
+                    username
+                };
+
+                createSessionAndCookies(req, res, newUser);
+                res.redirect('/profil');
+            });
+        });
+    });
 });
 
 // Déconnexion
 router.get('/signout', (req, res) => {
-    // Détruire la session
     req.session.destroy((err) => {
         if (err) {
             console.log(err);
         }
 
-        // Supprimer les cookies
-        res.clearCookie('idUser');
+        res.clearCookie('idUtilisateur');
         res.clearCookie('email');
         res.clearCookie('username');
 
-        // Rediriger vers la page de connexion
         res.redirect('/signin');
     });
 });

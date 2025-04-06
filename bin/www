@@ -11,16 +11,6 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 /**
- * Get environment from .env file
- */
-const env = 'development';
-if (env === 'development') {
-  dotenv.config({ path: path.resolve(__dirname, '.env.development') });
-} else {
-  dotenv.config(); // Par défaut, charge .env
-}
-
-/**
  * Get port from environment and store in Express.
  */
 

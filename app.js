@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const session = require("express-session");
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -19,8 +20,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(
+    session({
+        secret: "hkoezkhfkjfrh",
+        resave: false,
+        saveUninitialized: false,
+        cookie: { secure: false },
+    })
+);
+
 app.use('/', indexRouter);
-app.use('/authentification', authentificationRouter);
+app.use('/', authentificationRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
