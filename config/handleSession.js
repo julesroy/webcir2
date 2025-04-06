@@ -10,7 +10,7 @@ function handleSession(req, res, next, options = {}) {
         req.session.user = {
             idUser: req.cookies.idUser,
             email: req.cookies.email,
-            username: req.cookies.username
+            username: req.cookies.username,
         };
     }
 
