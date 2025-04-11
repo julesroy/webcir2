@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@config '../../tailwind.config.js';
+
+@font-face {
+    font-family: 'upheavtt';
+    src: url('../font/upheavtt.ttf');
+}
+
+@theme {
+    --font-regular: "upheavtt", sans-serif;
+}
