@@ -5,15 +5,15 @@ export class Preloader extends Phaser.Scene {
 
     preload() {
         // UI
-        this.load.image("heart", "assets/ui/life.png");
+        this.load.image("heart", "games/cardGame/assets/ui/life.png");
         
         // Background et cartes cachées
-        this.load.image("background", "assets/background.png");
-        this.load.image("card-back", "assets/cards/card-back.png");
+        this.load.image("background", "games/cardGame/assets/background.png");
+        this.load.image("card-back", "games/cardGame/assets/cards/card-back.png");
         
         // Faces des cartes
         for (let i = 1; i < 7; i++) {
-            this.load.image(`card-${i}`, `assets/cards/card-${i}.png`);
+            this.load.image(`card-${i}`, `games/cardGame/assets/cards/card-${i}.png`);
         }
     }
 

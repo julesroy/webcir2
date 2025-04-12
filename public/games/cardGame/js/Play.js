@@ -19,7 +19,7 @@ export class Play extends Phaser.Scene {
             5: [5, 5, 5],
             6: [6, 6, 6]
         };
-        return layouts[this.level] || [6, 6, 6]; // Tout les nv après 6 
+        return layouts[this.level] || [6, 6, 6]; // Tous les nv après 6 
     }
 
     constructor() {
@@ -33,15 +33,17 @@ export class Play extends Phaser.Scene {
         } else {
             this.startGame();
         }
-        document.getElementById('score-container').textContent = `Score: ${this.score} | Level: ${this.level}`;
+        document.getElementById('score-container').textContent = `${this.score}`;
+        document.getElementById('level-container').textContent = `${this.level}`;
     }
      // Affiche l'écran titre 
     setupTitleScreen() {
         const titleText = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY,
-            "Clothes Matching Game\nClick to Play",
+            "Memory\nAppuyez pour jouer",
             { 
+                fontFamily: "upheavtt",
                 fontSize: 32,
                 color: "#fff", 
                 stroke: "#000",
@@ -60,7 +62,8 @@ export class Play extends Phaser.Scene {
         this.score = 0;
         this.level = 1;
         this.lives = 10;
-        document.getElementById('score-container').textContent = `Score: ${this.score} | Level: ${this.level}`;
+        document.getElementById('score-container').textContent = `${this.score}`;
+        document.getElementById('level-container').textContent = `${this.level}`;
         this.createHearts();
         this.createCards();
     }
@@ -163,7 +166,8 @@ export class Play extends Phaser.Scene {
     checkCardMatch(clickedCard) {
         if (this.cardOpened.cardName === clickedCard.cardName) {
             this.score += 100;
-            document.getElementById('score-container').textContent = `Score: ${this.score} | Level: ${this.level}`;
+            document.getElementById('score-container').textContent = `${this.score}`;
+            document.getElementById('level-container').textContent = `${this.level}`;
 
             this.time.delayedCall(500, () => {
                 clickedCard.destroy();
@@ -188,8 +192,9 @@ export class Play extends Phaser.Scene {
         const winText = this.add.text(
             this.cameras.main.centerX,
             this.cameras.main.centerY,
-            `Level ${this.level - 1} Complete!`,
+            `Niveau ${this.level - 1} réussi!`,
             { 
+                fontFamily: "upheavtt",
                 fontSize: 36,
                 color: "#00ff00",
                 stroke: "#000",
@@ -200,7 +205,8 @@ export class Play extends Phaser.Scene {
             this.showGameResult(true);
             return;
         }
-        document.getElementById('score-container').textContent = `Score: ${this.score} | Level: ${this.level}`;
+        document.getElementById('score-container').textContent = `${this.score}`;
+        document.getElementById('level-container').textContent = `${this.level}`;
 
         this.time.delayedCall(1500, () => {
             winText.destroy();
@@ -237,6 +243,7 @@ export class Play extends Phaser.Scene {
             this.cameras.main.centerY,
             isWin ? "End Game GG !" : `Game Over\nScore: ${this.score}`,
             {
+                fontFamily: "upheavtt",
                 fontSize: 48,
                 color: isWin ? "#00ff00" : "#ff0000",
                 stroke: "#000",
@@ -244,8 +251,11 @@ export class Play extends Phaser.Scene {
             }
         ).setOrigin(0.5);
 
-        this.time.delayedCall(3000, () => {
-            this.scene.restart();
+        fetch(`/add-score?score=${this.score}&idJeu=1`)
+        .finally(() => {
+            this.time.delayedCall(3000, () => {
+                this.scene.restart();
+            });
         });
     }
 }
