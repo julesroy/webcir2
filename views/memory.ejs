@@ -3,9 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Card Memory Game</title>
-        <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
         <link rel="stylesheet" href="/css/style.css" />
+        <link rel="shortcut icon" href="/img/machine.png" type="image/x-icon" />
+        <title>Memory</title>
+        <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
         <style>
             body {
                 margin: 0;
@@ -17,7 +18,7 @@
                 align-items: center;
                 height: 100vh;
             }
-            #score-container {
+            #info-container {
                 margin-bottom: 20px;
                 font-size: 24px;
                 color: white;
@@ -30,7 +31,7 @@
         </style>
     </head>
     <body class="bg-[url('/img/background.png')] bg-cover bg-center bg-no-repeat h-screen font-regular text-white">
-        <div id="score-container">Score: 0</div>
+        <div id="info-container">Score: <span id="score-container">0</span> | Level: <span id="level-container"></span></div>
         <div id="game-container"></div>
         <script type="module" src="games/cardGame/js/main.js"></script>
     </body>

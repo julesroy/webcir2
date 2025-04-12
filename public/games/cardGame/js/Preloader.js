@@ -5,11 +5,9 @@ export class Preloader extends Phaser.Scene {
 
     preload() {
         // UI
-        this.load.image("volume-icon", "games/cardGame/assets/ui/volon.png");
-        this.load.image("volume-icon_off", "games/cardGame/assets/ui/voloff.png");
         this.load.image("heart", "games/cardGame/assets/ui/life.png");
         
-        // Background et cartes
+        // Background et cartes cachées
         this.load.image("background", "games/cardGame/assets/background.png");
         this.load.image("card-back", "games/cardGame/assets/cards/card-back.png");
         
