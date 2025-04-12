@@ -3,7 +3,6 @@ export const createCard = ({ scene, x, y, frontTexture, cardName }) => {
         console.error(`Texture "${frontTexture}" manquante !`);
         return null;
     }
-
     const backTexture = "card-back";
     const card = scene.add.sprite(x, y, backTexture)
         .setName(cardName)
@@ -40,7 +39,6 @@ export const createCard = ({ scene, x, y, frontTexture, cardName }) => {
             }
         });
     };
-
     const destroy = () => {
         if (card.getData('isActive')) {
             card.setData('isActive', false);

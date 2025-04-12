@@ -1,8 +1,7 @@
 import { Preloader } from './Preloader.js';
 import { Play } from './Play.js';
-
 const config = {
-    title: 'Card Memory Game',
+    title: 'Clothes Matching Game',
     type: Phaser.AUTO,
     backgroundColor: "#2c3e50",
     width: 450,
