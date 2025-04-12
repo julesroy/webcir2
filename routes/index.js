@@ -30,4 +30,12 @@ router.get('/accueil', function (req, res, next) {
     }
 });
 
+router.get('/card-game', function (req, res, next) {
+    if (!req.session.user) {
+        res.redirect('/signin');
+    } else {
+        res.render('cardGame', { user: req.session.user });
+    }
+});
+
 module.exports = router;

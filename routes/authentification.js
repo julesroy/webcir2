@@ -24,6 +24,23 @@ function createSessionAndCookies(req, res, user) {
     res.cookie('username', user.username, cookieOptions);
 }
 
+function updateSessionAndCookies(req, res, email, username) {
+    // Mettre à jour les données de session
+    req.session.user.email = email;
+    req.session.user.username = username;
+
+    // Mettre à jour les cookies
+    const cookieOptions = {
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 jours
+        httpOnly: true,
+        secure: true, // uniquement en HTTPS
+        sameSite: 'Strict', // protection contre CSRF
+    };
+
+    res.cookie('email', email, cookieOptions);
+    res.cookie('username', username, cookieOptions);
+}
+
 // Middelware pour gérer les sessions avec les cookies
 router.use((req, res, next) => {
     if (!req.session.user && req.cookies.idUtilisateur && req.cookies.email && req.cookies.username) {
@@ -133,6 +150,46 @@ router.post('/signupProcess', (req, res) => {
             });
         });
     });
+});
+
+// Modification compte
+router.post('/updateProcess', (req, res) => {
+    var { email, username, activermdp, mdp } = req.body;
+
+    if (Array.isArray(activermdp)) {
+        activermdp = activermdp.includes('true') ? 'true' : 'false';
+    }
+    const modifierMdp = activermdp === 'true';
+
+    if (modifierMdp) {
+        db.run(
+            'UPDATE utilisateurs SET email = ?, username = ?, mdp = ? WHERE idUtilisateur = ?',
+            [email, username, bcrypt.hashSync(mdp, 10), req.session.user.idUtilisateur],
+            (err) => {
+                if (err) {
+                    console.error("Erreur lors de la mise à jour de l'utilisateur:", err);
+                    return res.redirect('/profil?msg=erreurbdd');
+                }
+
+                updateSessionAndCookies(req, res, email, username);
+                res.redirect('/profil?msg=modificationok');
+            }
+        );
+    } else {
+        db.run(
+            'UPDATE utilisateurs SET email = ?, username = ? WHERE idUtilisateur = ?',
+            [email, username, req.session.user.idUtilisateur],
+            (err) => {
+                if (err) {
+                    console.error("Erreur lors de la mise à jour de l'utilisateur:", err);
+                    return res.redirect('/profil?msg=erreurbdd');
+                }
+
+                updateSessionAndCookies(req, res, email, username);
+                res.redirect('/profil?msg=modificationok');
+            }
+        );
+    }
 });
 
 // Déconnexion
