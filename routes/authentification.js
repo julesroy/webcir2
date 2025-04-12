@@ -24,13 +24,26 @@ function createSessionAndCookies(req, res, user) {
     res.cookie('username', user.username, cookieOptions);
 }
 
+// Middelware pour gérer les sessions avec les cookies
+router.use((req, res, next) => {
+    if (!req.session.user && req.cookies.idUtilisateur && req.cookies.email && req.cookies.username) {
+        // Recréer la session utilisateur à partir des cookies
+        req.session.user = {
+            idUtilisateur: req.cookies.idUtilisateur,
+            email: req.cookies.email,
+            username: req.cookies.username,
+        };
+    }
+    next();
+});
+
 // Formulaires d'inscription et de connexion
 router.get(
     '/signup',
     (req, res, next) => {
         handleSession(req, res, next, {
             requireNoSession: true,
-            redirectSession: '/profil',
+            redirectSession: '/accueil',
         });
     },
     (req, res) => {
@@ -43,7 +56,7 @@ router.get(
     (req, res, next) => {
         handleSession(req, res, next, {
             requireNoSession: true,
-            redirectSession: '/profil',
+            redirectSession: '/accueil',
         });
     },
     (req, res) => {
@@ -69,7 +82,7 @@ router.post('/signinProcess', (req, res) => {
         if (user && bcrypt.compareSync(mdp, user.mdp)) {
             // Comparaison du mot de passe
             createSessionAndCookies(req, res, user);
-            res.redirect('/profil');
+            res.redirect('/accueil');
         } else {
             res.redirect('/signin?msg=mdporemailincorrect');
         }
@@ -116,7 +129,7 @@ router.post('/signupProcess', (req, res) => {
                 };
 
                 createSessionAndCookies(req, res, newUser);
-                res.redirect('/profil');
+                res.redirect('/accueil');
             });
         });
     });

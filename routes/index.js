@@ -22,4 +22,12 @@ router.get('/profil', function (req, res, next) {
     }
 });
 
+router.get('/accueil', function (req, res, next) {
+    if (req.session.user) {
+        res.render('accueil', { user: req.session.user });
+    } else {
+        res.redirect('/signin');
+    }
+});
+
 module.exports = router;
