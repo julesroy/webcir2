@@ -4,10 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
 var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var authentificationRouter = require('./routes/authentification');
-
 var app = express();
 
 // view engine setup
@@ -20,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// configuration de la session
 app.use(
     session({
         secret: 'hkoezkhfkjfrh',
@@ -29,6 +26,21 @@ app.use(
     }),
 );
 
+// middleware pour "recréer" la session utilisateur à partir des cookies s'ils existent
+app.use((req, res, next) => {
+    if (!req.session.user && req.cookies.idUtilisateur && req.cookies.email && req.cookies.username) {
+        req.session.user = {
+            idUtilisateur: req.cookies.idUtilisateur,
+            email: req.cookies.email,
+            username: req.cookies.username,
+        };
+    }
+    next();
+});
+
+// récupération des routes
+var indexRouter = require('./routes/index');
+var authentificationRouter = require('./routes/authentification');
 app.use('/', indexRouter);
 app.use('/', authentificationRouter);
 

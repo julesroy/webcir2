@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/**
+ * Dans ce fichier, nous avons défini les différentes routes de notre site
+ */
+
 router.get('/', function (req, res, next) {
     if (!req.session.user) {
         res.render('index');
     } else {
-        res.redirect('/profil');
+        res.redirect('/accueil');
     }
 });
 
