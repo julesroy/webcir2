@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Memory Game</title>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
-    <link rel="stylesheet" href="/css/style.css" />
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        #score-container {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        #game-container {
-            width: 450px;
-            height: 430px;
-        }
-    </style>
-</head>
-<body class="bg-[url('/img/background.png')] bg-cover bg-center bg-no-repeat h-screen font-regular text-white">
-    <div id="score-container">Score: 0</div>
-    <div id="game-container"></div>
-    <script type="module" src="games/cardGame/js/main.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Card Memory Game</title>
+        <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+        <link rel="stylesheet" href="/css/style.css" />
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            #score-container {
+                margin-bottom: 20px;
+                font-size: 24px;
+                color: white;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            #game-container {
+                width: 450px;
+                height: 430px;
+            }
+        </style>
+    </head>
+    <body class="bg-[url('/img/background.png')] bg-cover bg-center bg-no-repeat h-screen font-regular text-white">
+        <div id="score-container">Score: 0</div>
+        <div id="game-container"></div>
+        <script type="module" src="games/cardGame/js/main.js"></script>
+    </body>
 </html>

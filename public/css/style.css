@@ -11,6 +11,8 @@
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-800: oklch(44.4% 0.177 26.899);
     --color-red-900: oklch(39.6% 0.141 25.723);
+    --color-yellow-300: oklch(90.5% 0.182 98.111);
+    --color-yellow-400: oklch(85.2% 0.199 91.936);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-500: oklch(55.1% 0.027 264.364);
@@ -24,6 +26,7 @@
     --text-base: 1rem;
     --text-base--line-height: calc(1.5 / 1);
     --text-2xl: 1.5rem;
+    --text-2xl--line-height: calc(2 / 1.5);
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
@@ -269,6 +272,9 @@
   .bg-white {
     background-color: var(--color-white);
   }
+  .bg-yellow-400 {
+    background-color: var(--color-yellow-400);
+  }
   .bg-\[url\(\'\/img\/background\.png\'\)\] {
     background-image: url('/img/background.png');
   }
@@ -290,11 +296,21 @@
   .py-1\.5 {
     padding-block: calc(var(--spacing) * 1.5);
   }
+  .pt-10 {
+    padding-top: calc(var(--spacing) * 10);
+  }
+  .pt-32 {
+    padding-top: calc(var(--spacing) * 32);
+  }
   .text-center {
     text-align: center;
   }
   .font-regular {
     font-family: var(--font-regular);
+  }
+  .text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--tw-leading, var(--text-2xl--line-height));
   }
   .text-2xl\/9 {
     font-size: var(--text-2xl);
@@ -379,6 +395,13 @@
       }
     }
   }
+  .hover\:bg-yellow-300 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-yellow-300);
+      }
+    }
+  }
   .hover\:text-red-800 {
     &:hover {
       @media (hover: hover) {
@@ -426,6 +449,11 @@
   .focus-visible\:outline-red-900 {
     &:focus-visible {
       outline-color: var(--color-red-900);
+    }
+  }
+  .focus-visible\:outline-yellow-400 {
+    &:focus-visible {
+      outline-color: var(--color-yellow-400);
     }
   }
   .sm\:text-sm\/6 {

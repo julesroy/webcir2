@@ -149,36 +149,32 @@ router.post('/updateProcess', (req, res) => {
 
     if (modifierMdp) {
         // on met à jour les données
-        db.run('UPDATE utilisateurs SET email = ?, username = ?, mdp = ? WHERE idUtilisateur = ?', [email, username, bcrypt.hashSync(mdp, 10), req.session.user.idUtilisateur],
-            (err) => {
-                if (err) {
-                    console.error("Erreur lors de la mise à jour de l'utilisateur:", err);
-                    return res.redirect('/profil?msg=erreurbdd');
-                }
-
-                // on met à jour la session et les cookies
-                majSessionCookies(req, res, email, username);
-
-                // on redirige vers la page d'accueil avec un message de succès
-                res.redirect('/accueil?msg=modificationok');
+        db.run('UPDATE utilisateurs SET email = ?, username = ?, mdp = ? WHERE idUtilisateur = ?', [email, username, bcrypt.hashSync(mdp, 10), req.session.user.idUtilisateur], (err) => {
+            if (err) {
+                console.error("Erreur lors de la mise à jour de l'utilisateur:", err);
+                return res.redirect('/profil?msg=erreurbdd');
             }
-        );
+
+            // on met à jour la session et les cookies
+            majSessionCookies(req, res, email, username);
+
+            // on redirige vers la page d'accueil avec un message de succès
+            res.redirect('/accueil?msg=modificationok');
+        });
     } else {
         // on met à jour les données (sans modifier le mot de passe)
-        db.run('UPDATE utilisateurs SET email = ?, username = ? WHERE idUtilisateur = ?', [email, username, req.session.user.idUtilisateur],
-            (err) => {
-                if (err) {
-                    console.error("Erreur lors de la mise à jour de l'utilisateur:", err);
-                    return res.redirect('/profil?msg=erreurbdd');
-                }
-
-                // on met à jour la session et les cookies
-                majSessionCookies(req, res, email, username);
-
-                // on redirige vers la page d'accueil avec un message de succès
-                res.redirect('/accueil?msg=modificationok');
+        db.run('UPDATE utilisateurs SET email = ?, username = ? WHERE idUtilisateur = ?', [email, username, req.session.user.idUtilisateur], (err) => {
+            if (err) {
+                console.error("Erreur lors de la mise à jour de l'utilisateur:", err);
+                return res.redirect('/profil?msg=erreurbdd');
             }
-        );
+
+            // on met à jour la session et les cookies
+            majSessionCookies(req, res, email, username);
+
+            // on redirige vers la page d'accueil avec un message de succès
+            res.redirect('/accueil?msg=modificationok');
+        });
     }
 });
 
