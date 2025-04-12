@@ -43,7 +43,7 @@ export class Play extends Phaser.Scene {
             "Clothes Matching Game\nClick to Play",
             { 
                 fontSize: 32,
-                color: "#fff",
+                color: "#fff", 
                 stroke: "#000",
                 strokeThickness: 3,
                 align: "center"
@@ -59,6 +59,7 @@ export class Play extends Phaser.Scene {
     startGame() {
         this.score = 0;
         this.level = 1;
+        this.lives = 10;
         document.getElementById('score-container').textContent = `Score: ${this.score} | Level: ${this.level}`;
         this.createHearts();
         this.createCards();
