@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="shortcut icon" href="/img/machine.png" type="image/x-icon" />
+        <title>Scores</title>
+    </head>
+    <body class="bg-[url('/img/background.png')] bg-cover bg-center bg-no-repeat h-screen font-regular text-white">
+        <div class="flex min-h-full flex-col justify-center">
+            <div class="mx-auto w-full max-w-2xl bg-white text-gray-900 p-8 rounded-lg">
+                <h2 class="text-center text-2xl/9 font-bold tracking-tight">Scores</h2>
+
+                <div class="flex justify-between">
+                    <div class="mt-6 flex flex-col gap-4">
+                        <table class="text-left border-collapse border border-gray-500">
+                            <thead>
+                                <tr>
+                                    <th class="border border-gray-500 px-4 py-2">Username</th>
+                                    <th class="border border-gray-500 px-4 py-2">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% scores.jeu1.forEach((score) => { %>
+                                    <tr>
+                                        <td class="border border-gray-500 px-4 py-2"><%= score.username %></td>
+                                        <td class="border border-gray-500 px-4 py-2"><%= score.score %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-6 flex flex-col gap-4">
+                        <table class="text-left border-collapse border border-gray-500">
+                            <thead>
+                                <tr>
+                                    <th class="border border-gray-500 px-4 py-2">Username</th>
+                                    <th class="border border-gray-500 px-4 py-2">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% scores.jeu2.forEach((score) => { %>
+                                    <tr>
+                                        <td class="border border-gray-500 px-4 py-2"><%= score.username %></td>
+                                        <td class="border border-gray-500 px-4 py-2"><%= score.score %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-6 flex flex-col gap-4">
+                        <table class="text-left border-collapse border border-gray-500">
+                            <thead>
+                                <tr>
+                                    <th class="border border-gray-500 px-4 py-2">Username</th>
+                                    <th class="border border-gray-500 px-4 py-2">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% scores.jeu3.forEach((score) => { %>
+                                    <tr>
+                                        <td class="border border-gray-500 px-4 py-2"><%= score.username %></td>
+                                        <td class="border border-gray-500 px-4 py-2"><%= score.score %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>
