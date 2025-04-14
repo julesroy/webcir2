@@ -1,7 +1,7 @@
-import { createCard } from "./createCard.js";
+import { createCard } from './createCard.js';
 
 export class Play extends Phaser.Scene {
-    cardNames = ["card-1", "card-2", "card-3", "card-4", "card-5", "card-6"];
+    cardNames = ['card-1', 'card-2', 'card-3', 'card-4', 'card-5', 'card-6'];
     cards = [];
     cardOpened = null;
     canMove = true;
@@ -17,9 +17,9 @@ export class Play extends Phaser.Scene {
             3: [4, 4, 4],
             4: [5, 5, 4],
             5: [5, 5, 5],
-            6: [6, 6, 6]
+            6: [6, 6, 6],
         };
-        return layouts[this.level] || [6, 6, 6]; // Tous les nv après 6 
+        return layouts[this.level] || [6, 6, 6]; // Tous les nv après 6
     }
 
     constructor() {
@@ -27,7 +27,7 @@ export class Play extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(0, 0, "background").setOrigin(0);
+        this.add.image(0, 0, 'background').setOrigin(0);
         if (this.game.isBooted) {
             this.setupTitleScreen();
         } else {
@@ -36,21 +36,19 @@ export class Play extends Phaser.Scene {
         document.getElementById('score-container').textContent = `${this.score}`;
         document.getElementById('level-container').textContent = `${this.level}`;
     }
-     // Affiche l'écran titre 
+    // Affiche l'écran titre
     setupTitleScreen() {
-        const titleText = this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY,
-            "Memory\nAppuyez pour jouer",
-            { 
-                fontFamily: "upheavtt",
+        const titleText = this.add
+            .text(this.cameras.main.centerX, this.cameras.main.centerY, 'Memory\nAppuyez pour jouer', {
+                fontFamily: 'upheavtt',
                 fontSize: 32,
-                color: "#fff", 
-                stroke: "#000",
+                color: '#fff',
+                stroke: '#000',
                 strokeThickness: 3,
-                align: "center"
-            }
-        ).setOrigin(0.5).setInteractive();
+                align: 'center',
+            })
+            .setOrigin(0.5)
+            .setInteractive();
 
         titleText.on('pointerdown', () => {
             titleText.destroy();
@@ -69,69 +67,69 @@ export class Play extends Phaser.Scene {
     }
     // Crée les coeurs de vie
     createHearts() {
-        this.hearts.forEach(heart => heart.destroy());
+        this.hearts.forEach((heart) => heart.destroy());
         this.hearts = [];
 
         for (let i = 0; i < this.lives; i++) {
-            this.hearts.push(this.add.image(35 + 30 * i, 27, "heart").setScale(2));
+            this.hearts.push(this.add.image(35 + 30 * i, 27, 'heart').setScale(2));
         }
     }
     // Crée les cartes avec une logique de sélection cyclique (quand on a plus de cartes)
     createCards() {
-        this.cards.forEach(card => card.destroy());
+        this.cards.forEach((card) => card.destroy());
         this.cards = [];
         this.cardOpened = null;
-    
+
         const paddingX = 14;
         const paddingY = 14;
         const cardWidth = 99 * 0.7; // Prendre en compte le scale
         const cardHeight = 128 * 0.7; // Prendre en compte le scale
-    
+
         const layout = this.rowLayout;
         const totalCards = layout.reduce((a, b) => a + b, 0);
         const totalPairs = totalCards / 2;
-    
+
         // Nouvelle logique de sélection des cartes avec réutilisation cyclique
         const selectedCards = [];
         const shuffledNames = Phaser.Utils.Array.Shuffle([...this.cardNames]);
-        
+
         for (let i = 0; i < totalPairs; i++) {
             selectedCards.push(shuffledNames[i % shuffledNames.length]);
         }
-    
+
         const cardPairs = [...selectedCards, ...selectedCards];
         const shuffledCards = Phaser.Utils.Array.Shuffle(cardPairs);
-    
+
         let index = 0;
         let startY = 90;
-    
+
         layout.forEach((cardsInRow, rowIndex) => {
-            const totalRowWidth = (cardsInRow * cardWidth) + ((cardsInRow - 1) * paddingX);
+            const totalRowWidth = cardsInRow * cardWidth + (cardsInRow - 1) * paddingX;
             const startX = (this.game.config.width - totalRowWidth) / 2;
-    
+
             for (let col = 0; col < cardsInRow; col++) {
-                const x = startX + col * (cardWidth + paddingX) + (cardWidth * 0.7 / 2);
+                const x = startX + col * (cardWidth + paddingX) + (cardWidth * 0.7) / 2;
                 const y = startY + rowIndex * (cardHeight + paddingY);
                 const cardName = shuffledCards[index];
-    
+
                 const card = createCard({
                     scene: this,
                     x,
                     y,
                     frontTexture: cardName,
-                    cardName
+                    cardName,
                 });
-    
+
                 if (!card) {
                     console.error(`Erreur création carte ${cardName}`);
                     continue;
                 }
-    
+
                 this.cards.push(card);
                 index++;
             }
         });
-    
+
         this.setupCardInteractions();
     }
     // Gère les interactions avec les cartes (clic quoi)
@@ -139,17 +137,14 @@ export class Play extends Phaser.Scene {
         this.input.on('pointerdown', (pointer) => {
             if (!this.canMove) return;
 
-            const clickedCard = this.cards.find(card =>
-                card.gameObject.getBounds().contains(pointer.x, pointer.y) &&
-                !card.isFlipping
-            );
+            const clickedCard = this.cards.find((card) => card.gameObject.getBounds().contains(pointer.x, pointer.y) && !card.isFlipping);
 
             if (clickedCard) {
                 this.handleCardClick(clickedCard);
             }
         });
     }
-    
+
     handleCardClick(clickedCard) {
         this.canMove = false;
         clickedCard.flip(() => {
@@ -172,7 +167,7 @@ export class Play extends Phaser.Scene {
             this.time.delayedCall(500, () => {
                 clickedCard.destroy();
                 this.cardOpened.destroy();
-                this.cards = this.cards.filter(c => c !== clickedCard && c !== this.cardOpened);
+                this.cards = this.cards.filter((c) => c !== clickedCard && c !== this.cardOpened);
                 this.cardOpened = null;
                 this.canMove = true;
 
@@ -189,18 +184,15 @@ export class Play extends Phaser.Scene {
         this.level++;
         this.lives = Math.min(this.lives + 3, 8);
 
-        const winText = this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY,
-            `Niveau ${this.level - 1} réussi!`,
-            { 
-                fontFamily: "upheavtt",
+        const winText = this.add
+            .text(this.cameras.main.centerX, this.cameras.main.centerY, `Niveau ${this.level - 1} réussi!`, {
+                fontFamily: 'upheavtt',
                 fontSize: 36,
-                color: "#00ff00",
-                stroke: "#000",
-                strokeThickness: 4
-            }
-        ).setOrigin(0.5);
+                color: '#00ff00',
+                stroke: '#000',
+                strokeThickness: 4,
+            })
+            .setOrigin(0.5);
         if (this.level > 20) {
             this.showGameResult(true);
             return;
@@ -236,23 +228,19 @@ export class Play extends Phaser.Scene {
             });
         });
     }
-    // Affiche le résultat du jeu 
+    // Affiche le résultat du jeu
     showGameResult(isWin) {
-        const text = this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY,
-            isWin ? "End Game GG !" : `Game Over\nScore: ${this.score}`,
-            {
-                fontFamily: "upheavtt",
+        const text = this.add
+            .text(this.cameras.main.centerX, this.cameras.main.centerY, isWin ? 'End Game GG !' : `Game Over\nScore: ${this.score}`, {
+                fontFamily: 'upheavtt',
                 fontSize: 48,
-                color: isWin ? "#00ff00" : "#ff0000",
-                stroke: "#000",
-                strokeThickness: 4
-            }
-        ).setOrigin(0.5);
+                color: isWin ? '#00ff00' : '#ff0000',
+                stroke: '#000',
+                strokeThickness: 4,
+            })
+            .setOrigin(0.5);
 
-        fetch(`/add-score?score=${this.score}&idJeu=1`)
-        .finally(() => {
+        fetch(`/add-score?score=${this.score}&idJeu=1`).finally(() => {
             this.time.delayedCall(3000, () => {
                 this.scene.restart();
             });
