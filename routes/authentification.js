@@ -158,8 +158,16 @@ router.post('/updateProcess', (req, res) => {
             // on met à jour la session et les cookies
             majSessionCookies(req, res, email, username);
 
-            // on redirige vers la page d'accueil avec un message de succès
-            res.redirect('/accueil?msg=modificationok');
+            // on met à jour le nom d'utilisateur dans la tables des scores
+            db.run('UPDATE scores SET username = ? WHERE idUtilisateur = ?', [username, req.session.user.idUtilisateur], (err) => {
+                if (err) {
+                    console.error("Erreur lors de la mise à jour des scores de l'utilisateur:", err);
+                    return res.redirect('/profil?msg=erreurbdd');
+                }
+
+                // on redirige vers la page d'accueil avec un message de succès
+                res.redirect('/accueil?msg=modificationok');
+            });
         });
     } else {
         // on met à jour les données (sans modifier le mot de passe)
@@ -172,8 +180,16 @@ router.post('/updateProcess', (req, res) => {
             // on met à jour la session et les cookies
             majSessionCookies(req, res, email, username);
 
-            // on redirige vers la page d'accueil avec un message de succès
-            res.redirect('/accueil?msg=modificationok');
+            // on met à jour le nom d'utilisateur dans la tables des scores
+            db.run('UPDATE scores SET username = ? WHERE idUtilisateur = ?', [username, req.session.user.idUtilisateur], (err) => {
+                if (err) {
+                    console.error("Erreur lors de la mise à jour des scores de l'utilisateur:", err);
+                    return res.redirect('/profil?msg=erreurbdd');
+                }
+
+                // on redirige vers la page d'accueil avec un message de succès
+                res.redirect('/accueil?msg=modificationok');
+            });
         });
     }
 });
