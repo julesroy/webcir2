@@ -54,20 +54,20 @@ router.get('/scores', function (req, res) {
 
         db.all(sql, [], (err, rows) => {
             if (err) {
-                console.error("Erreur lors de la récupération des scores:", err);
+                console.error('Erreur lors de la récupération des scores:', err);
                 return res.redirect('/accueil?msg=erreurbdd');
             }
 
             // on regroupe les scores par jeu
             const scoresParJeu = {
-                jeu1: rows.filter(row => row.idJeu === 1),
-                jeu2: rows.filter(row => row.idJeu === 2),
-                jeu3: rows.filter(row => row.idJeu === 3)
+                jeu1: rows.filter((row) => row.idJeu === 1),
+                jeu2: rows.filter((row) => row.idJeu === 2),
+                jeu3: rows.filter((row) => row.idJeu === 3),
             };
 
-            res.render('scores', { 
+            res.render('scores', {
                 user: req.session.user,
-                scores: scoresParJeu
+                scores: scoresParJeu,
             });
         });
     } else {
@@ -84,6 +84,14 @@ router.get('/memory', function (req, res) {
         res.redirect('/signin');
     } else {
         res.render('memory', { user: req.session.user });
+    }
+});
+
+router.get('/catcher', function (req, res) {
+    if (!req.session.user) {
+        res.redirect('/signin');
+    } else {
+        res.render('catcher', { user: req.session.user });
     }
 });
 

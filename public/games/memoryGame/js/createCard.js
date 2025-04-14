@@ -3,21 +3,16 @@ export const createCard = ({ scene, x, y, frontTexture, cardName }) => {
         console.error(`Texture "${frontTexture}" manquante !`);
         return null;
     }
-    const backTexture = "card-back";
-    const card = scene.add.sprite(x, y, backTexture)
-        .setName(cardName)
-        .setInteractive({ useHandCursor: true })
-        .setScale(0.70)
-        .setData({
-            isFlipping: false,
-            isFront: false,
-            isActive: true
-        });
-    
+    const backTexture = 'card-back';
+    const card = scene.add.sprite(x, y, backTexture).setName(cardName).setInteractive({ useHandCursor: true }).setScale(0.7).setData({
+        isFlipping: false,
+        isFront: false,
+        isActive: true,
+    });
 
     const flipCard = (callback) => {
         if (!card.getData('isActive') || card.getData('isFlipping')) return;
-        
+
         card.setData('isFlipping', true);
         scene.tweens.add({
             targets: card,
@@ -26,7 +21,7 @@ export const createCard = ({ scene, x, y, frontTexture, cardName }) => {
             onComplete: () => {
                 card.setTexture(card.getData('isFront') ? backTexture : frontTexture);
                 card.setData('isFront', !card.getData('isFront'));
-                
+
                 scene.tweens.add({
                     targets: card,
                     scaleX: 0.7,
@@ -34,9 +29,9 @@ export const createCard = ({ scene, x, y, frontTexture, cardName }) => {
                     onComplete: () => {
                         card.setData('isFlipping', false);
                         callback?.();
-                    }
+                    },
                 });
-            }
+            },
         });
     };
     const destroy = () => {
@@ -46,7 +41,7 @@ export const createCard = ({ scene, x, y, frontTexture, cardName }) => {
                 targets: card,
                 alpha: 0,
                 duration: 200,
-                onComplete: () => card.destroy()
+                onComplete: () => card.destroy(),
             });
         }
     };
@@ -56,6 +51,8 @@ export const createCard = ({ scene, x, y, frontTexture, cardName }) => {
         flip: flipCard,
         destroy,
         cardName,
-        get isFlipping() { return card.getData('isFlipping'); }
+        get isFlipping() {
+            return card.getData('isFlipping');
+        },
     };
 };

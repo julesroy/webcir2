@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon",
     "build:css": "npx @tailwindcss/cli -i ./public/css/tailwind.css -o ./public/css/style.css",
-    "format": "prettier --write ./views/**/*.ejs ./routes/**/*.js ./*.js ./config/**/*.js ./*.js"
+    "format": "prettier --write ./views/**/*.ejs ./routes/**/*.js ./*.js ./config/**/*.js ./public/**/*.js ./*.js"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.13",
