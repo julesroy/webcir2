@@ -1,8 +1,8 @@
 let player;
 let cursors;
-let speed = 12;
+let speed = 20;
 let fallingObjects;
-let scaleFactor = 1;
+let scaleFactor = 1.5;
 let walls;
 let lives = 3;
 let score = 0;
@@ -10,11 +10,11 @@ let livesText;
 let scoreText;
 
 let difficultyLevel = 1;
-let spawnDelay = 3000;
+let spawnDelay = 1000;
 
 function preload() {
     this.load.image('background', 'games/catcherGame/assets/background.png');
-    this.load.image('player', 'games/catcherGame/assets/player.png');
+    this.load.image('player', 'games/catcherGame/assets/panier.png');
     this.load.image('wall', 'games/catcherGame/assets/wall.png');
 
     // Charger les 5 vêtements différents
@@ -30,7 +30,7 @@ function create() {
     lives = 3;
     score = 0;
     difficultyLevel = 1;
-    spawnDelay = 5000;
+    spawnDelay = 1000;
 
     const width = this.sys.game.config.width;
     const height = this.sys.game.config.height;
@@ -47,7 +47,7 @@ function create() {
         .setOrigin(1, 0.5)
         .setDisplaySize(20, height);
 
-    const startY = height * 0.9;
+    const startY = height * 0.85;
     player = this.physics.add.sprite(width / 2, startY, 'player');
     player.setScale(0.4);
     player.setCollideWorldBounds(true);
@@ -66,19 +66,19 @@ function create() {
     livesText = this.add.text(10, 10, 'Vies: ' + lives, {
         fontFamily: 'upheavtt',
         fontSize: 48,
-    });
+    }).setOrigin(0, 0);
 
     scoreText = this.add.text(width - 200, 10, 'Score: ' + score, {
         fontFamily: 'upheavtt',
         fontSize: 48,
-    });
+    }).setOrigin(0.5, 0);
 }
 
 function scheduleNextObject() {
     createFallingObject.call(this);
 
     difficultyLevel = Math.floor(score / 5) + 1;
-    spawnDelay = Math.max(300, 1000 - difficultyLevel * 100);
+    spawnDelay = Math.max(300, 1000 - difficultyLevel * 25);
 
     setTimeout(() => {
         if (lives > 0) {
@@ -113,7 +113,7 @@ function update() {
         player.setFlipX(false);
     }
 
-    player.y = this.sys.game.config.height * 0.9;
+    player.y = this.sys.game.config.height * 0.85;
 
     this.physics.overlap(
         player,
