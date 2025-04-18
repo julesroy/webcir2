@@ -1,0 +1,273 @@
+*{
+  font-family: upheavtt;
+}
+
+#game-wrapper {
+  width: 90%;
+  max-width: 1200px;
+  min-height: 600px;
+  border: 4px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Ecran d'accueil */
+#start-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#start-box {
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 4px solid #ffffff;
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 15px #000;
+}
+
+#start-box h1 {
+  color: gold;
+  font-size: 30px;
+  margin: 20px 0;
+  text-shadow: 2px 2px #000;
+}
+
+/* Style des boutons */
+button {
+  font-size: 25px;
+  padding: 12px 25px;
+  background-color: #ffcc00;
+  color: #000;
+  border: 3px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+button:focus {
+  outline: none;
+}
+
+#pause-btn {
+  font-size: 20px;
+  padding: 12px 25px;
+  background-color: #ffcc00;
+  color: #000; 
+  border: 3px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  z-index:9999;
+}
+
+#pause-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Style overlay de la pause */
+.pause-overlay {
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  width: 90%;
+  height: 55%;
+  background-color: rgba(0, 0, 0, 1);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  font-size: 5em;
+  font-weight: bold;
+  z-index: 9999;
+  border: 5px solid white;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #fff, 1px 1px 0 #fff;
+}
+
+/* Style texte de l'overlay de la pause */
+.pause-text {
+  color: red;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #fff, 1px 1px 0 #fff; /* Ombres pour un effet pixelisé */
+  text-align: center;
+  letter-spacing: 2px; /* Espacement entre les lettres pour l'effet pixel */
+  padding: 20px;
+}
+
+
+
+#start-box button {
+  font-size: 25px;
+  background-color: #ffcc00;
+  color: #000;
+  border: 3px solid #000;
+  padding: 12px 25px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#start-box button:hover {
+  transform: scale(1.05);
+}
+
+/* Décor en haut */
+.decor-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.coin {
+  width: 40px;
+}
+
+/* Jeu */
+#game-container {
+  padding: 20px;
+}
+
+#header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.3em;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  color: white;
+}
+
+/*header : infos du jeu*/
+#header p {
+  font-size: 1.3em;
+  margin: 0 20px 0px;
+  color: white;
+}
+
+#controls {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#controls button {
+  padding: 8px 16px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+
+
+/*obstacle chaussette*/
+#obstacle {
+  position: absolute;
+  display: none;
+  cursor: pointer;
+  z-index: 20;
+}
+
+#obstacle img {
+  width: 200px;
+}
+
+
+/*espace de jeu*/
+#cash-register {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 45vw; /* ou une taille fixe si besoin */
+  height: 400px; /* ou adapte selon ta caisse */
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+/*Style global des pièces et billets*/
+.money-img {
+  position: absolute;
+  width: auto; /* La taille de la pièce */
+  height: 75px;
+  z-index: 10; /* Assurer que la pièce est au-dessus de l'image de fond */
+}
+
+/* Style des pièces */
+.coin {
+  width: auto;
+  height: 75px;
+  z-index: 2; 
+}
+
+/* Style des billets */
+.bill {
+  width: auto;
+  height: 75px;
+  z-index: 1; 
+}
+
+/* Section pour le montant */
+#input-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Input du montant */
+#input-section #total-label {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: #000; 
+}
+
+/* Input pour le montant total */
+#input-section input {
+  padding: 10px;
+  font-size: 2em; 
+  width: 200px; 
+  margin-right: 10px;
+  background-color: #222; 
+  color: #fff; 
+  border: 3px solid #ffcc00; 
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(255, 255, 0, 0.7); 
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+
+/* Bouton Valider */
+#input-section button {
+  padding: 8px 16px;
+  font-size: 25px;
+  cursor: pointer;
+  background-color: #ffcc00;
+  color: #000; 
+  border: 3px solid #000; 
+  border-radius: 5px; 
+  transition: transform 0.2s; 
+}
+
+/* Effet au survol du bouton */
+#input-section button:hover {
+  transform: scale(1.05); 
+}

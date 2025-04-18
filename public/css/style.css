@@ -337,6 +337,12 @@
   .bg-yellow-400 {
     background-color: var(--color-yellow-400);
   }
+  .bg-\[url\(\'\/games\/cashierGame\/assets\/background\.png\'\)\] {
+    background-image: url('/games/cashierGame/assets/background.png');
+  }
+  .bg-\[url\(\'\/games\/cashierGame\/assets\/caisse\.png\'\)\] {
+    background-image: url('/games/cashierGame/assets/caisse.png');
+  }
   .bg-\[url\(\'\/img\/background\.png\'\)\] {
     background-image: url('/img/background.png');
   }

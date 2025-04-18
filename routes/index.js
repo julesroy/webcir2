@@ -95,6 +95,14 @@ router.get('/catcher', function (req, res) {
     }
 });
 
+router.get('/cashier', function (req, res) {
+    if (!req.session.user) {
+        res.redirect('/signin');
+    } else {
+        res.render('cashier', { user: req.session.user });
+    }
+});
+
 router.get('/add-score', function (req, res) {
     const { score, idJeu } = req.query;
 

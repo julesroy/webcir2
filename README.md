@@ -11,6 +11,7 @@
 Notre projet propose plusieurs mini-jeux sur le thème des vêtements :
 - Un "memory" : il faut retrouver les paires de vêtements identiques.
 - Un "catcher" : il faut attraper les vêtements qui tombent dans un panier.
+- Un "cashier" : il faut donner la bonne somme des éléments présents sur la caisse.
 
 Chaque jeu a un score, quand la partie se termine, le score est ajouté à la base de données et le joueur peut aller consulter les meilleurs scores sur la page des scores.
 
