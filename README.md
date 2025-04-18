@@ -75,6 +75,6 @@ Nous avons choisi d'utiliser SQLite pour la base de données. Pour visualiser le
 
 - Tailwind CSS : le framework CSS que nous avons utilisé pour le CSS de ce projet. Il est configuré dans le fichier `tailwind.config.js` et est généré par la commande `npm run build :css`.
 
-## Déploiement :
+## Bonus - Déploiement :
 
 En dehors du lancement de ce projet en local comme indiqué ci-dessus, il est possible de le tester sur un serveur distant, nous l'avons déployé à l'adresse suivante : [webcir2.alwaysdata.net](https://webcir2.alwaysdata.net/)
