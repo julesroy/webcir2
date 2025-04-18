@@ -8,19 +8,8 @@
         <title>Memory</title>
         <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
         <style>
-            body {
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
             #info-container {
                 margin-bottom: 20px;
-                font-size: 24px;
                 color: white;
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
@@ -31,8 +20,18 @@
         </style>
     </head>
     <body class="bg-[url('/img/background.png')] bg-cover bg-center bg-no-repeat h-screen font-regular text-white">
-        <div id="info-container">Score: <span id="score-container">0</span> | Level: <span id="level-container"></span></div>
-        <div id="game-container"></div>
+        <header class="flex justify-center pt-10 gap-4">
+            <a href="/accueil" class="flex justify-center rounded-md bg-red-500 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Accueil</a>
+            <a href="/scores" class="flex justify-center rounded-md bg-yellow-400 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Scores</a>
+            <a href="/memory" class="flex justify-center rounded-md bg-red-900 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Memory</a>
+            <a href="/catcher" class="flex justify-center rounded-md bg-red-900 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Catcher</a>
+            <a href="/" class="flex justify-center rounded-md bg-red-900 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Jeu3</a>
+            <a href="/profil" class="flex justify-center rounded-md bg-red-500 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]"><%= user.username %></a>
+        </header>
+        <div class="flex flex-col justify-center items-center pt-32">
+            <div id="info-container" class="text-3xl">Score: <span id="score-container">0</span> | Level: <span id="level-container"></span></div>
+            <div id="game-container"></div>
+        </div>
         <script type="module" src="games/memoryGame/js/main.js"></script>
     </body>
 </html>

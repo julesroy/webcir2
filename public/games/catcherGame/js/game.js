@@ -131,7 +131,7 @@ function update() {
         if (obj.y > this.sys.game.config.height + 50) {
             obj.destroy();
             lives--;
-            livesText.setText('Lives: ' + lives);
+            livesText.setText('Vies: ' + lives);
             if (lives <= 0) {
                 fetch(`/add-score?score=${score}&idJeu=2`).finally(() => {
                     showGameOverUI.call(this);

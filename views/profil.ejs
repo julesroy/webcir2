@@ -8,12 +8,20 @@
         <title>Profil</title>
     </head>
     <body class="bg-[url('/img/background.png')] bg-cover bg-center bg-no-repeat h-screen font-regular text-white">
-        <div class="flex min-h-full flex-col justify-center">
-            <div class="mx-auto w-full max-w-sm bg-white p-8 rounded-lg">
-                <h2 class="text-center text-2xl/9 font-bold tracking-tight text-gray-900">Modifier votre compte</h2>
+        <header class="flex justify-center pt-10 gap-4">
+            <a href="/accueil" class="flex justify-center rounded-md bg-red-500 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Accueil</a>
+            <a href="/scores" class="flex justify-center rounded-md bg-yellow-400 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-yellow-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Scores</a>
+            <a href="/memory" class="flex justify-center rounded-md bg-red-900 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Memory</a>
+            <a href="/catcher" class="flex justify-center rounded-md bg-red-900 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Catcher</a>
+            <a href="/" class="flex justify-center rounded-md bg-red-900 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Jeu3</a>
+            <a href="/profil" class="flex justify-center rounded-md bg-red-500 px-3 py-1.5 text-3xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]"><%= user.username %></a>
+        </header>
+        <div class="flex flex-col justify-center pt-32">
+            <div class="mx-auto w-full max-w-lg border-2 border-black bg-white p-8 rounded-lg">
+                <h2 class="text-center text-3xl font-bold tracking-tight text-gray-900">Modifier votre compte</h2>
                 <form class="space-y-6" action="/updateProcess" method="POST">
-                    <div>
-                        <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
+                    <div class="mt-8">
+                        <label for="email" class="block text-lg font-medium text-gray-900">Email</label>
                         <div class="mt-2">
                             <input type="email" name="email" id="email" autocomplete="email" required placeholder="Email" value="<%= user.email %>" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-900 sm:text-sm/6" />
                         </div>
@@ -21,7 +29,7 @@
 
                     <div>
                         <div class="flex items-center justify-between">
-                            <label for="username" class="block text-sm/6 font-medium text-gray-900">Nom d'utilisateur</label>
+                            <label for="username" class="block text-lg font-medium text-gray-900">Nom d'utilisateur</label>
                         </div>
                         <div class="mt-2">
                             <input type="text" name="username" id="username" autocomplete="username" required placeholder="Nom d'utilisateur" value="<%= user.username %>" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-red-900 sm:text-sm/6" />
@@ -30,11 +38,11 @@
 
                     <div>
                         <div class="flex items-center justify-between">
-                            <label for="mdp" class="block text-sm/6 font-medium text-gray-900">Mot de passe</label>
+                            <label for="mdp" class="block text-lg font-medium text-gray-900">Mot de passe</label>
                             <div class="flex items-center gap-2">
                                 <input type="hidden" name="activermdp" value="false" />
                                 <input type="checkbox" id="activermdp" name="activermdp" value="true" class="h-4 w-4 text-red-900 border-gray-300 rounded focus:ring-red-900" />
-                                <label for="activermdp" class="text-sm text-gray-600">Modifier le mot de passe</label>
+                                <label for="activermdp" class="text-lg text-gray-600">Modifier le mot de passe</label>
                             </div>
                         </div>
                         <div class="mt-2">
@@ -42,9 +50,9 @@
                         </div>
                     </div>
 
-                    <div class="flex gap-4 mt-3">
-                        <button type="submit" class="flex w-full justify-center rounded-md bg-red-900 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900">Sauvegarder</button>
-                        <a href="/signout" class="flex w-full justify-center rounded-md bg-red-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500">Déconnexion</a>
+                    <div class="flex gap-4 mt-10">
+                        <button type="submit" class="flex w-full justify-center rounded-md bg-red-900 px-3 py-1.5 text-xl font-semibold text-white shadow-xs hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-900 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Sauvegarder</button>
+                        <a href="/signout" class="flex w-full justify-center rounded-md bg-red-500 px-3 py-1.5 text-xl font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]">Déconnexion</a>
                     </div>
                 </form>
             </div>
